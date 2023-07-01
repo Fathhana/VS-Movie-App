@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "normalize.css";
 import styled, { ThemeProvider } from "styled-components";
 import Header from "./components/Header";
