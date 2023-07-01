@@ -58,9 +58,9 @@ const PaginationContainer = styled.div`
     }
 
     li {
-      margin: 0 5px;
+      margin: 5px 5px;
       list-style: none;
-      display: inline-block;
+      display: inline-grid;
     }
 
     .pagination__link--disabled {
