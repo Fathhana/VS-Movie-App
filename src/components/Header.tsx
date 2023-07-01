@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { IoMenu } from "react-icons/io5";
 import { AiOutlineSearch } from "react-icons/ai";
+import { MdModeNight, MdSunny } from "react-icons/md";
 import logo from "../images/logo.png";
 import { Link } from "react-router-dom";
 
@@ -28,13 +29,6 @@ const SearchButton = styled.button`
   cursor: pointer;
   background: #000;
   color: #fff;
-`;
-
-const MobileMenuItem = styled.div`
-  display: block;
-  padding: 10px;
-  text-decoration: none;
-  color: #333;
 `;
 
 const LogoImage = styled.img`
@@ -67,11 +61,38 @@ const MobileSearchContainer = styled.nav`
   text-align: right;
 `;
 
+const ThemeSwitchButton = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+`;
+
+const ThemeSwitchBtn = styled.div`
+  color: #000;
+
+  svg {
+    transform: translateY(2px);
+  }
+`;
+
+const ThemeTitle = styled.span`
+  color: #000;
+  margin-left: 5px;
+  font-weight: bold;
+`;
+
 interface HeaderProps {
-  onSearch: (query: string) => void;
+  onSearch: (query: string, page: number) => void;
+  toggleThemeMode: () => void;
+  themeMode: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ onSearch }) => {
+const Header: React.FC<HeaderProps> = ({
+  onSearch,
+  toggleThemeMode,
+  themeMode,
+}) => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSearchMenuOpen, setSearchMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -87,7 +108,8 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
   };
 
   const handleSearch = () => {
-    onSearch(searchQuery);
+    onSearch(searchQuery, 1);
+    setSearchMenuOpen(false);
   };
 
   const handleSearchInputChange = (
@@ -110,9 +132,18 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
       <MobileMenuContainer
         style={{ display: isMobileMenuOpen ? "block" : "none" }}
       >
-        <Link to="/">
-          <MobileMenuItem>Home</MobileMenuItem>
-        </Link>
+        <ThemeTitle>Choose Theme :</ThemeTitle>
+        <ThemeSwitchButton onClick={toggleThemeMode}>
+          {themeMode === "light" ? (
+            <ThemeSwitchBtn>
+              Dark Mode <MdModeNight />
+            </ThemeSwitchBtn>
+          ) : (
+            <ThemeSwitchBtn>
+              Light Mode <MdSunny />
+            </ThemeSwitchBtn>
+          )}
+        </ThemeSwitchButton>
       </MobileMenuContainer>
       <MobileSearchContainer
         style={{ display: isSearchMenuOpen ? "block" : "none" }}

@@ -19,18 +19,3 @@ export const searchMovies = async (query: string, page: number) => {
     throw new Error("Failed to fetch movies");
   }
 };
-
-export const getMovies = async () => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/discover/movie`, {
-      params: {
-        api_key: API_KEY,
-      },
-    });
-
-    console.log(response);
-    return response.data;
-  } catch (error) {
-    throw new Error("Failed to fetch movies");
-  }
-};

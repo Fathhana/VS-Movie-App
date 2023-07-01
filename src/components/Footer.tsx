@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const FooterContainer = styled.footer`
+  color: #000;
   background-color: #f2f2f2;
   padding: 20px;
   text-align: center;
