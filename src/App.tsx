@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "normalize.css";
 import styled from "styled-components";
 import Header from "./components/Header";
@@ -23,13 +23,23 @@ const App: React.FC = () => {
     queryClient.setQueryData(["movies", searchQuery], movieResults);
   };
 
-  // Fetch movies data using the useQuery hook
   const {
     isLoading,
     isError,
     data: movies,
     error,
-  } = useQuery(["movies", searchQuery], () => searchMovies(searchQuery));
+  } = useQuery(["movies", searchQuery], () => searchMovies(searchQuery), {
+    enabled: false, // Disable the initial fetch
+  });
+
+  // Manually trigger the query when searchQuery changes
+  React.useEffect(() => {
+    if (searchQuery) {
+      queryClient.prefetchQuery(["movies", searchQuery], () =>
+        searchMovies(searchQuery)
+      );
+    }
+  }, [searchQuery, queryClient]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -42,7 +52,7 @@ const App: React.FC = () => {
   return (
     <AppContainer>
       <Header onSearch={handleSearch} />
-      <MovieList movies={movies.results} />
+      <MovieList movies={movies?.results || []} />
       <Footer />
     </AppContainer>
   );

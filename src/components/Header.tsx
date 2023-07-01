@@ -30,7 +30,7 @@ const SearchButton = styled.button`
   color: #fff;
 `;
 
-const MobileMenuItem = styled.a`
+const MobileMenuItem = styled.div`
   display: block;
   padding: 10px;
   text-decoration: none;
@@ -48,6 +48,25 @@ const SearchInput = styled.input`
   border: 1px solid #ccc;
 `;
 
+const MobileMenuContainer = styled.nav`
+  position: absolute;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 10px 0;
+`;
+
+const MobileSearchContainer = styled.nav`
+  position: absolute;
+  top: 70px;
+  right: 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 10px 0;
+  text-align: right;
+`;
+
 interface HeaderProps {
   onSearch: (query: string) => void;
 }
@@ -56,27 +75,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSearchMenuOpen, setSearchMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-
-  const MobileMenuContainer = styled.nav<{ isOpen: boolean }>`
-    display: ${({ isOpen }) => (isOpen ? "block" : "none")};
-    position: absolute;
-    top: 70px;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    padding: 10px 0;
-  `;
-
-  const MobileSearchContainer = styled.nav<{ isOpen: boolean }>`
-    display: ${({ isOpen }) => (isOpen ? "block" : "none")};
-    position: absolute;
-    top: 70px;
-    right: 0;
-    width: 100%;
-    background-color: #fff;
-    padding: 10px 0;
-    text-align: right;
-  `;
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
@@ -109,12 +107,16 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
       <MenuButton onClick={toggleSearchMenu}>
         <AiOutlineSearch size={24} />
       </MenuButton>
-      <MobileMenuContainer isOpen={isMobileMenuOpen}>
+      <MobileMenuContainer
+        style={{ display: isMobileMenuOpen ? "block" : "none" }}
+      >
         <Link to="/">
           <MobileMenuItem>Home</MobileMenuItem>
         </Link>
       </MobileMenuContainer>
-      <MobileSearchContainer isOpen={isSearchMenuOpen}>
+      <MobileSearchContainer
+        style={{ display: isSearchMenuOpen ? "block" : "none" }}
+      >
         <SearchInput
           type="text"
           placeholder="Search movies..."

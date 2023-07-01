@@ -12,7 +12,9 @@ interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({ children }) => {
-  return <FooterContainer>{children}</FooterContainer>;
+  return (
+    <FooterContainer>Copyright @2023. All Rights Reserved</FooterContainer>
+  );
 };
 
 export default Footer;

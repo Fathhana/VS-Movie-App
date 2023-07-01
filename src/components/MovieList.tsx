@@ -26,6 +26,52 @@ const PaginationContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+
+  .pagination-container {
+    ul {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 0 5px;
+      list-style: none;
+      display: inline-block;
+    }
+
+    .pagination__link--disabled {
+      a {
+        background-color: #a0a0a0;
+      }
+    }
+
+    .pagination__link--active {
+      a {
+        background-color: #0755a8;
+      }
+    }
+
+    a {
+      padding: 8px 12px;
+      background-color: #007bff;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .active a {
+      background-color: #0056b3;
+    }
+
+    .disabled a {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
 `;
 
 const CustomPagination = styled(ReactPaginate)`
@@ -96,12 +142,13 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
         ))}
       </MovieListContainer>
       <PaginationContainer>
-        <CustomPagination
+        <ReactPaginate
           previousLabel={"Previous"}
           nextLabel={"Next"}
-          pageCount={Math.ceil(movies.length / moviesPerPage)}
+          className={"pagination-container"}
+          pageCount={Math.ceil(movies?.length / moviesPerPage)}
           onPageChange={handlePageChange}
-          containerClassName={"pagination"}
+          containerClassName={"paginations"}
           previousLinkClassName={"pagination__link"}
           nextLinkClassName={"pagination__link"}
           disabledClassName={"pagination__link--disabled"}
